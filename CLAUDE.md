@@ -15,9 +15,9 @@
 - [x] Project initialized
 - [x] Design created
 - [x] `globals.css` with design tokens and CSS variables
-- [ ] `Navbar` component
-- [ ] `Footer` component
-- [ ] Hero page (`/`)
+- [x] `Navbar` component
+- [x] `Footer` component
+- [x] Hero page (`/`)
 - [ ] About page (`/about`)
 - [ ] Projects page (`/projects`)
 - [ ] Experience page (`/experience`)

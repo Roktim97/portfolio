@@ -1,65 +1,180 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import Link from 'next/link';
+import { useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
+
+const STACK_PRIMARY   = ['Node.js', 'TypeScript', 'AWS', 'PostgreSQL', 'Docker'];
+const STACK_SECONDARY = ['React.js', 'Next.js', 'Tailwind CSS'];
+
+const STATS = [
+  '[ 04 · projects shipped this qtr ]',
+  '[ 99.98% · uptime maintained ]',
+  '[ NE India → ∞ ]',
+];
+
+const up = (delay: number) => ({
+  initial:    { opacity: 0, y: 14 },
+  animate:    { opacity: 1, y: 0 },
+  transition: { duration: 0.9, delay, ease: [0.2, 0.8, 0.2, 1] as const },
+});
+
+export default function HeroPage() {
+  const glowRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const glow = glowRef.current;
+    if (!glow) return;
+    const onMove = (e: PointerEvent) => {
+      const x = (e.clientX / window.innerWidth  - 0.5) * 40;
+      const y = (e.clientY / window.innerHeight - 0.5) * 40;
+      glow.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+    };
+    window.addEventListener('pointermove', onMove);
+    return () => window.removeEventListener('pointermove', onMove);
+  }, []);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <>
+      {/* ─── fixed backgrounds ─── */}
+      <div aria-hidden="true" className="fixed inset-0 z-0 pointer-events-none" style={{
+        backgroundImage: 'linear-gradient(to right,var(--line) 1px,transparent 1px),linear-gradient(to bottom,var(--line) 1px,transparent 1px)',
+        backgroundSize: '64px 64px',
+        maskImage: 'radial-gradient(ellipse 80% 60% at 50% 40%,#000 30%,transparent 85%)',
+        WebkitMaskImage: 'radial-gradient(ellipse 80% 60% at 50% 40%,#000 30%,transparent 85%)',
+        animation: 'gridDrift 60s linear infinite',
+      }} />
+
+      <div ref={glowRef} aria-hidden="true" className="fixed z-0 pointer-events-none"
+        style={{
+          width: 900, height: 900,
+          left: '50%', top: '45%',
+          transform: 'translate(-50%,-50%)',
+          background: 'radial-gradient(circle at center,var(--accent-soft) 0%,transparent 60%)',
+          filter: 'blur(60px)',
+          animation: 'glowPulse 9s ease-in-out infinite',
+        }}
+      />
+
+      <div aria-hidden="true" className="fixed z-1 pointer-events-none mix-blend-overlay"
+        style={{
+          inset: '-50%', opacity: 0.04,
+          backgroundImage: "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")",
+          animation: 'noiseShift 8s steps(8) infinite',
+        }}
+      />
+
+      {/* ─── hero content ─── */}
+      <section className="shell relative z-2 flex-1 flex flex-col justify-center w-full pt-6 pb-12 md:pt-0 md:pb-20">
+
+        {/* meta row */}
+        <motion.div {...up(0.35)}
+          className="flex flex-wrap items-center gap-3 md:gap-3.5 mb-8 md:mb-11 font-mono text-mono-md text-muted tracking-[0.04em] uppercase"
+        >
+          <span className="shrink-0 w-14 h-px bg-accent" />
+          <span>Software Engineer</span>
+          <span style={{ color: 'var(--line)' }}>·</span>
+          <span className="text-fg">Backend Focus</span>
+          <span style={{ color: 'var(--line)' }}>·</span>
+          <span>Est. 2021</span>
+        </motion.div>
+
+        {/* name */}
+        <h1 className="font-display font-semibold text-fg mb-8"
+            style={{ fontSize: 'var(--fs-display)', lineHeight: 0.88, letterSpacing: '-0.045em' }}>
+          <span className="inline-block overflow-hidden align-top">
+            <motion.span
+              initial={{ y: '110%' }} animate={{ y: 0 }}
+              transition={{ duration: 1.1, delay: 0.45, ease: [0.2, 0.8, 0.2, 1] }}
+              className="inline-block"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              <span className="text-accent" style={{ marginRight: '0.04em' }}>→</span>Roktim
+            </motion.span>
+          </span>
+          <br />
+          <span className="inline-block overflow-hidden align-top">
+            <motion.span
+              initial={{ y: '110%' }} animate={{ y: 0 }}
+              transition={{ duration: 1.1, delay: 0.58, ease: [0.2, 0.8, 0.2, 1] }}
+              className="inline-block"
             >
-              Learning
-            </a>{" "}
-            center.
+              Gogoi.
+            </motion.span>
+          </span>
+        </h1>
+
+        {/* tagline + stats */}
+        <motion.div {...up(0.85)} className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 md:gap-12 mt-4">
+          <p className="font-display font-normal leading-[1.3] max-w-[640px] text-fg"
+             style={{ fontSize: 'clamp(18px,2vw,28px)', letterSpacing: '-0.01em' }}>
+            I architect the logic behind{' '}
+            <span className="text-accent italic">great products.</span>
+            <br />
+            <span className="text-muted">
+              Scalable backend systems, cloud infrastructure, and full‑stack web apps
+              built with Node.js, TypeScript, and AWS.
+            </span>
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
+
+          <div className="font-mono text-mono-md text-muted leading-[1.7] md:text-right tracking-[0.02em] shrink-0">
+            {STATS.map(s => <div key={s}>{s}</div>)}
+          </div>
+        </motion.div>
+
+        {/* stack pills */}
+        <motion.div {...up(1.0)} className="mt-8 flex flex-col gap-2">
+          <div className="flex flex-wrap gap-2">
+            {STACK_PRIMARY.map(t => <span key={t} className="pill primary">{t}</span>)}
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {STACK_SECONDARY.map(t => <span key={t} className="pill">{t}</span>)}
+          </div>
+        </motion.div>
+
+        {/* CTAs */}
+        <motion.div {...up(1.15)} className="flex gap-3 mt-8 md:mt-11 flex-wrap">
+          <Link href="/projects" className="btn btn-primary">
+            View My Work
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M3 11L11 3M11 3H4M11 3V10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </Link>
+          <a href="/resume.pdf" download className="btn btn-secondary">
+            Download Resume
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M7 2V11M7 11L3 7M7 11L11 7M2 12H12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+        </motion.div>
+
+        {/* scroll hint */}
+        <motion.div {...up(1.35)}
+          className="hidden md:flex items-center gap-2.5 mt-16 font-mono text-mono-sm text-muted tracking-[0.04em] uppercase"
+        >
+          <span>Scroll to explore</span>
+          <span className="relative inline-block w-6 overflow-hidden" style={{ height: 1, background: 'var(--muted)' }}>
+            <span className="absolute inset-0" style={{ background: 'var(--fg)', animation: 'scrollBar 2.4s ease-in-out infinite' }} />
+          </span>
+        </motion.div>
+      </section>
+
+      <style>{`
+        @keyframes gridDrift {
+          0%   { background-position: 0 0, 0 0; }
+          100% { background-position: 64px 64px, 64px 64px; }
+        }
+        @keyframes noiseShift {
+          0%   { transform: translate(0,0); }
+          25%  { transform: translate(-3%,2%); }
+          50%  { transform: translate(2%,-3%); }
+          75%  { transform: translate(-2%,-2%); }
+          100% { transform: translate(0,0); }
+        }
+        @keyframes scrollBar {
+          0%       { transform: translateX(-100%); }
+          60%,100% { transform: translateX(100%); }
+        }
+      `}</style>
+    </>
   );
 }
