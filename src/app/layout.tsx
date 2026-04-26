@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './styles/globals.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import PageBackground from './components/PageBackground';
 
 export const metadata: Metadata = {
   title: 'Roktim Gogoi — Full Stack Engineer',
@@ -12,6 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className="min-h-screen flex flex-col bg-bg text-fg">
+        <PageBackground />
         <Navbar />
         <main className="flex-1 flex flex-col">{children}</main>
         <Footer />

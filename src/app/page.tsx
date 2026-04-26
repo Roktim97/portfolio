@@ -36,15 +36,7 @@ export default function HeroPage() {
 
   return (
     <>
-      {/* ─── fixed backgrounds ─── */}
-      <div aria-hidden="true" className="fixed inset-0 z-0 pointer-events-none" style={{
-        backgroundImage: 'linear-gradient(to right,var(--line) 1px,transparent 1px),linear-gradient(to bottom,var(--line) 1px,transparent 1px)',
-        backgroundSize: '64px 64px',
-        maskImage: 'radial-gradient(ellipse 80% 60% at 50% 40%,#000 30%,transparent 85%)',
-        WebkitMaskImage: 'radial-gradient(ellipse 80% 60% at 50% 40%,#000 30%,transparent 85%)',
-        animation: 'gridDrift 60s linear infinite',
-      }} />
-
+      {/* ─── hero glow orb ─── */}
       <div ref={glowRef} aria-hidden="true" className="fixed z-0 pointer-events-none"
         style={{
           width: 900, height: 900,
@@ -53,14 +45,6 @@ export default function HeroPage() {
           background: 'radial-gradient(circle at center,var(--accent-soft) 0%,transparent 60%)',
           filter: 'blur(60px)',
           animation: 'glowPulse 9s ease-in-out infinite',
-        }}
-      />
-
-      <div aria-hidden="true" className="fixed z-1 pointer-events-none mix-blend-overlay"
-        style={{
-          inset: '-50%', opacity: 0.04,
-          backgroundImage: "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")",
-          animation: 'noiseShift 8s steps(8) infinite',
         }}
       />
 
@@ -105,7 +89,7 @@ export default function HeroPage() {
 
         {/* tagline + stats */}
         <motion.div {...up(0.85)} className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 md:gap-12 mt-4">
-          <p className="font-display font-normal leading-[1.3] max-w-[640px] text-fg"
+          <p className="font-display font-normal leading-[1.3] max-w-160 text-fg"
              style={{ fontSize: 'clamp(18px,2vw,28px)', letterSpacing: '-0.01em' }}>
             I architect the logic behind{' '}
             <span className="text-accent italic">great products.</span>
@@ -139,7 +123,7 @@ export default function HeroPage() {
               <path d="M3 11L11 3M11 3H4M11 3V10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </Link>
-          <a href="/resume.pdf" download className="btn btn-secondary">
+          <a href="/Roktim_Software_Engineer.pdf" download className="btn btn-secondary">
             Download Resume
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
               <path d="M7 2V11M7 11L3 7M7 11L11 7M2 12H12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
@@ -148,33 +132,16 @@ export default function HeroPage() {
         </motion.div>
 
         {/* scroll hint */}
-        <motion.div {...up(1.35)}
+        {/* <motion.div {...up(1.35)}
           className="hidden md:flex items-center gap-2.5 mt-16 font-mono text-mono-sm text-muted tracking-[0.04em] uppercase"
         >
           <span>Scroll to explore</span>
           <span className="relative inline-block w-6 overflow-hidden" style={{ height: 1, background: 'var(--muted)' }}>
             <span className="absolute inset-0" style={{ background: 'var(--fg)', animation: 'scrollBar 2.4s ease-in-out infinite' }} />
           </span>
-        </motion.div>
+        </motion.div> */}
       </section>
 
-      <style>{`
-        @keyframes gridDrift {
-          0%   { background-position: 0 0, 0 0; }
-          100% { background-position: 64px 64px, 64px 64px; }
-        }
-        @keyframes noiseShift {
-          0%   { transform: translate(0,0); }
-          25%  { transform: translate(-3%,2%); }
-          50%  { transform: translate(2%,-3%); }
-          75%  { transform: translate(-2%,-2%); }
-          100% { transform: translate(0,0); }
-        }
-        @keyframes scrollBar {
-          0%       { transform: translateX(-100%); }
-          60%,100% { transform: translateX(100%); }
-        }
-      `}</style>
     </>
   );
 }
