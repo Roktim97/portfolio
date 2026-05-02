@@ -1,8 +1,9 @@
 'use client';
 
-import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import PageHeader from '../components/PageHeader';
+import CTAStrip from '../components/CTAStrip';
 
 const up = (delay = 0) => ({
   initial:    { opacity: 0, y: 14 },
@@ -69,31 +70,11 @@ const SKILL_GROUPS = [
 export default function AboutPage() {
   return (
     <>
-      {/* ── page header ── */}
-      <motion.div
-        {...up(0.25)}
-        className="shell relative z-2 flex flex-col md:flex-row md:items-end md:justify-between gap-6 md:gap-12 mt-16 md:mt-20 mb-10 md:mb-14 pb-10 md:pb-14 w-full"
-        style={{ borderBottom: '1px solid var(--line)' }}
-      >
-        <div>
-          <div className="flex items-center gap-3 mb-5 font-mono text-mono-sm text-muted tracking-[0.08em] uppercase">
-            <span className="w-7 h-px bg-accent shrink-0" />
-            <span>02 / About</span>
-          </div>
-          <h1 className="font-display font-semibold text-fg"
-              style={{ fontSize: 'var(--fs-h1)', lineHeight: 0.9, letterSpacing: '-0.045em' }}>
-            The human<br />
-            behind the{' '}
-            <span className="text-accent">code.</span>
-          </h1>
-        </div>
-
-        <div className="font-mono text-mono-sm text-muted leading-[1.7] md:text-right tracking-[0.02em] shrink-0 pb-0 md:pb-3">
-          <div style={{ color: 'var(--fg)', fontWeight: 500 }}>Roktim Gogoi</div>
-          <div>Guwahati, Assam · IN</div>
-          <div>3+ yrs · Full Stack</div>
-        </div>
-      </motion.div>
+      <PageHeader
+        eyebrow="02 / About"
+        title={<>The human<br />behind the <span className="text-accent">code.</span></>}
+        crumbs={['Roktim Gogoi', 'Guwahati, Assam · IN', '3+ yrs · Full Stack']}
+      />
 
       {/* ── main content ── */}
       <main className="shell relative z-2 w-full pb-20">
@@ -260,32 +241,11 @@ export default function AboutPage() {
           ))}
         </motion.section>
 
-        {/* ── CTA strip ── */}
-        <motion.section
-          {...up(0.2)}
-          className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 pt-16 pb-10"
-          style={{ borderTop: '1px solid var(--line)' }}
-        >
-          <h3 className="font-display font-medium text-fg"
-              style={{ fontSize: 'clamp(28px,4vw,56px)', letterSpacing: '-0.03em', lineHeight: 1, maxWidth: '12ch' }}>
-            Have something{' '}
-            <span className="text-accent italic" style={{ fontWeight: 400 }}>to build?</span>
-          </h3>
-          <div className="flex gap-3 flex-wrap">
-            <Link href="/projects" className="btn btn-primary">
-              View My Work
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                <path d="M3 11L11 3M11 3H4M11 3V10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </Link>
-            <Link href="/contact" className="btn btn-secondary">
-              Get in touch
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                <path d="M3 11L11 3M11 3H4M11 3V10" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </Link>
-          </div>
-        </motion.section>
+        <CTAStrip
+          heading={<>Have something <span className="text-accent italic" style={{ fontWeight: 400 }}>to build?</span></>}
+          primary={{ label: 'View My Work', href: '/projects', icon: 'arrow' }}
+          secondary={{ label: 'Get in touch', href: '/contact', icon: 'arrow' }}
+        />
 
       </main>
     </>
